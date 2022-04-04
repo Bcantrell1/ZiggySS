@@ -14,6 +14,8 @@
     "@supabase/supabase-js": "^1.33.2",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "carbon-components-svelte": "^0.62.3",
+    "carbon-icons-svelte": "^11.0.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
