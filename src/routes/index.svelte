@@ -5,6 +5,5 @@
 </script>
 
 <section>
-	<h4>Welcome {$user?.email ? $user.email : ''}</h4>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+	<h4>Welcome {$user ? `Admin` : ``}</h4>
 </section>
