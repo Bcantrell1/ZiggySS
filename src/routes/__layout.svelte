@@ -1,41 +1,28 @@
+<script context="module">
+	import { getFacilities } from '$lib/supabase/services';
+	export async function load({ fetch, session, context }) {
+		const { data, error } = await getFacilities();
+		return {
+			props: {
+				facilities: data,
+				error: error
+			}
+		};
+	}
+</script>
+
 <script>
-	import 'carbon-components-svelte/css/g90.css';
-	import { goto } from '$app/navigation';
+	import '../app.css';
+
+	import Header from '$lib/components/Header/index.svelte';
+	import Footer from '$lib/components/Footer/index.svelte';
+
 	import supabase from '$lib/supabase';
 	import { user } from '$lib/store/auth';
 
-	import {
-		Header,
-		SideNav,
-		SideNavItems,
-		SideNavLink,
-		SkipToContent,
-		Content,
-		HeaderUtilities,
-		HeaderAction,
-		TooltipIcon,
-		HeaderNav
-	} from 'carbon-components-svelte';
-	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
+	export let facilities;
 
-	let isSideNavOpen = false;
-
-	//Logout Controller
-	const logOut = async () => {
-		try {
-			let { error } = await supabase.auth.signOut();
-			if (error) throw error;
-			$user = false;
-			goto('/');
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	//Setting user to current auth state
 	user.set(supabase.auth.user());
-
-	//Realtime listener for auth state change
 	supabase.auth.onAuthStateChange((_, session) => {
 		user.set(session?.user);
 	});
@@ -43,35 +30,10 @@
 	// $: console.log($user);
 </script>
 
-<Header
-	company="Ziggy"
-	platformName="Self Storage"
-	persistentHamburgerMenu={true}
-	href="/"
-	bind:isSideNavOpen
->
-	<svelte:fragment slot="skip-to-content">
-		<SkipToContent />
-	</svelte:fragment>
-	<HeaderNav>
-		<HeaderUtilities>
-			{#if $user}
-				<TooltipIcon icon={UserAvatarFilledAlt} direction="left" tooltipText="Log Out">
-					<HeaderAction on:click={logOut} icon={UserAvatarFilledAlt} />
-				</TooltipIcon>
-			{/if}
-		</HeaderUtilities>
-	</HeaderNav>
-</Header>
-<SideNav bind:isOpen={isSideNavOpen}>
-	<SideNavItems>
-		<SideNavLink href="/" text="Home" isSelected />
-		<SideNavLink href="/rates" text="View rates" />
-		<SideNavLink href="/faq" text="FAQ" />
-		<SideNavLink href="/contact" text="Contact" />
-	</SideNavItems>
-</SideNav>
-
-<Content>
-	<slot />
-</Content>
+<div class="flex flex-col flex-grow h-screen">
+	<Header {facilities} />
+	<main class="container h-screen mx-auto px-4">
+		<slot {facilities} />
+	</main>
+	<Footer />
+</div>
