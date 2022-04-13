@@ -1,8 +1,47 @@
 <script>
 	import { createFacility } from '$lib/supabase/services';
-	let f_name = '';
+	
+	let n_facility_uri,	
+		n_facility_name,	
+		n_facility_email,	
+		n_facility_phone,	
+		n_facility_street,	
+		n_facility_city,
+		n_facility_state,	
+		n_facility_zip,	
+		n_facility_hours,	
+		n_facility_about;
 
-	async function facilityCreate() {}
+	async function facilityCreate() {
+		try {
+			const {data, error} = await createFacility(
+				{
+					facility_uri: n_facility_uri,
+					facility_name: n_facility_name,
+					facility_email: n_facility_email,
+					facility_phone: n_facility_phone,
+					facility_street: n_facility_street,
+					facility_city: n_facility_city,
+					facility_state: n_facility_state,
+					facility_zip: n_facility_zip,
+					facility_hours: n_facility_hours,
+					facility_about: n_facility_about
+				}
+			);
+
+			if(error) {
+				throw error;
+			}
+
+			if(data) {
+				console.log(data);
+			}
+
+		} catch(error) {
+			console.log(error);
+		}
+		
+	}
 </script>
 
 <div data-theme="emerald" tabindex="0" class="collapse rounded-box collapse-plus mb-8">
@@ -18,7 +57,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_uri}
 							class="input input-bordered"
 						/>
 					</label>
@@ -30,7 +69,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_name}
 							class="input input-bordered"
 						/>
 					</label>
@@ -42,7 +81,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_email}
 							class="input input-bordered"
 						/>
 					</label>
@@ -54,7 +93,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_phone}
 							class="input input-bordered"
 						/>
 					</label>
@@ -66,7 +105,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_street}
 							class="input input-bordered"
 						/>
 					</label>
@@ -78,7 +117,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_city}
 							class="input input-bordered"
 						/>
 					</label>
@@ -90,7 +129,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_state}
 							class="input input-bordered"
 						/>
 					</label>
@@ -102,7 +141,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_zip}
 							class="input input-bordered"
 						/>
 					</label>
@@ -114,7 +153,7 @@
 							type="text"
 							placeholder="info@site.com"
 							required
-							bind:value={f_name}
+							bind:value={n_facility_hours}
 							class="input input-bordered"
 						/>
 					</label>
@@ -123,7 +162,7 @@
 					<label class="input-group input-group-vertical">
 						<span>About</span>
 						<textarea
-							bind:value={f_name}
+							bind:value={n_facility_about}
 							class="textarea textarea-bordered h-40"
 							placeholder="Have something to tell us?"
 						/>

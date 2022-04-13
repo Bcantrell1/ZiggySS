@@ -5,8 +5,8 @@ export async function logOut() {
 	return { data: !error, error };
 }
 
-export async function createFacility({ content, user }) {
-	const { data, error } = await supabase.from('facilities').insert({ content, user });
+export async function createFacility(content) {
+	const { data, error } = await supabase.from('facilities').insert(content);
 	return { data, error };
 }
 

@@ -121,11 +121,13 @@
 			<li><a class:active={$page.url.pathname === '/about'} href="/about">About</a></li>
 			<li><a class:active={$page.url.pathname === '/faq'} href="/faq">Faq</a></li>
 			<li><a class:active={$page.url.pathname === '/contact'} href="/contact">Contact</a></li>
+			{#if $user}
 			<li>
 				<a class:active={$page.url.pathname.includes('/admin/dashboard')} href="/admin/dashboard"
 					>Admin</a
 				>
 			</li>
+			{/if}
 		</ul>
 	</div>
 	{#if $user}
