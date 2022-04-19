@@ -3,7 +3,7 @@
 	export async function load({ params }) {
 		const { data: facilityData, error: facilityError } = await getFacilitybyUri(params.uri);
 		const { data: unitData, error: unitError } = await getUnitsByFacilityId(
-			facilityData[0]?.facility_id
+			facilityData[0]?.id
 		);
 		return {
 			props: {
