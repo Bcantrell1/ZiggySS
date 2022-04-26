@@ -1,12 +1,17 @@
 <script>
+	// Framework Imports
 	import { goto } from '$app/navigation';
 	import { user } from '$lib/store/auth';
+
+	// DB services
 	import supabase from '$lib/supabase';
 
+	// Component variables
 	let email = '';
 	let loginError = false;
 	let loading = false;
 
+	// Login Function TODO move to services.js
 	const logIn = async (e) => {
 		e.preventDefault();
 		try {
@@ -29,6 +34,7 @@
 		}
 	};
 
+	// Take admin user to dashboard no need for login
 	if ($user) {
 		goto('/admin/dashboard');
 	}

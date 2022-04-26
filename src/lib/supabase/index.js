@@ -1,3 +1,4 @@
+//! Supabase connection default methods
 import { createClient } from '@supabase/supabase-js';
 
 const SUPABSE_URL = import.meta.env.VITE_SVELTE_APP_SUPABASE_URL;

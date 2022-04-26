@@ -1,5 +1,6 @@
 <script context="module">
 	import { getFacilities } from '$lib/supabase/services';
+	// SSR
 	export async function load({ fetch, session, context }) {
 		const { data, error } = await getFacilities();
 		return {
@@ -12,16 +13,18 @@
 </script>
 
 <script>
+	// Components
 	import CreateFacility from '$lib/components/Admin/CreateFacility.svelte';
+	// Framework Imports
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
-
 	import { goto } from '$app/navigation';
-
+	// Store
 	import { user } from '$lib/store/auth';
-
+	// SSR output
 	export let facilities;
 
+	// Check for authorized user
 	$: if (browser) {
 		if (!$user) {
 			goto('/admin');
@@ -40,7 +43,7 @@
 		{#each facilities as facility, i}
 			<div class="w-full m-2 broder-primary">
 				<a
-					href="{$page.url.pathname}/edit/{facility.facility_uri}"
+					href="{$page.url.pathname}/overview/{facility.facility_uri}"
 					class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center btn btn-outline btn-primary hover:bg-primary"
 				>
 					<div>
