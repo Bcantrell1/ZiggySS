@@ -1,35 +1,31 @@
 <script>
-	import { createFacility } from '$lib/supabase/services';
+	import { createUnit } from '$lib/supabase/services';
+	export let facility_id;
 
-	let n_facility_uri,
-		n_facility_name,
-		n_facility_email,
-		n_facility_phone,
-		n_facility_street,
-		n_facility_city,
-		n_facility_state,
-		n_facility_zip,
-		n_facility_hours,
-		n_facility_about;
+	let n_unit_width,
+		n_unit_length,
+		n_unit_str_rate,
+		n_unit_spc_rate,
+		n_unit_rented,
+		n_unit_available,
+		n_unit_climate;
 
 	let loading = false;
 	let createError = false;
 	let createComplete = false;
 
-	async function facilityCreate() {
+	async function unitCreate() {
 		try {
 			loading = true;
-			const { data, error } = await createFacility({
-				facility_uri: n_facility_uri,
-				facility_name: n_facility_name,
-				facility_email: n_facility_email,
-				facility_phone: n_facility_phone,
-				facility_street: n_facility_street,
-				facility_city: n_facility_city,
-				facility_state: n_facility_state,
-				facility_zip: n_facility_zip,
-				facility_hours: n_facility_hours,
-				facility_about: n_facility_about
+			const { data, error } = await createUnit({
+				facility_id: facility_id,
+				width: n_unit_width,
+				length: n_unit_length,
+				str_rate: n_unit_str_rate,
+				spc_rate: n_unit_spc_rate,
+				rented: n_unit_rented,
+				available: n_unit_available,
+				climate: n_unit_climate
 			});
 
 			if (error) {
@@ -51,7 +47,7 @@
 
 <div data-theme="emerald" tabindex="0" class="collapse rounded-box collapse-plus mb-8">
 	<input type="checkbox" />
-	<div class="collapse-title text-xl font-medium">Add Facility</div>
+	<div class="collapse-title text-xl font-medium">Create Unit</div>
 	{#if loading}
 		<progress class="progress progress-primary h-24 w-full" />
 	{:else if createError}
@@ -88,7 +84,7 @@
 						d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
 					/></svg
 				>
-				<span>You have created a new facility!</span>
+				<span>You have created a new unit!</span>
 			</div>
 			<button on:click={() => (createComplete = false)} class="btn btn-wide btn-outline btn-active"
 				>Create Another</button
@@ -96,123 +92,89 @@
 		</div>
 	{:else}
 		<div class="collapse-content">
-			<form class="pt-6 rounded-box" on:submit|preventDefault={facilityCreate}>
+			<form class="pt-6 rounded-box" on:submit|preventDefault={unitCreate}>
 				<div class="grid justify-center grid-cols-2 gap-4">
 					<div class="flex flex-col py-3">
 						<label class="input-group input-group-vertical">
-							<span>URI</span>
+							<span>Width</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="10"
 								required
-								bind:value={n_facility_uri}
+								bind:value={n_unit_width}
 								class="input input-bordered"
 							/>
 						</label>
 					</div>
 					<div class="flex flex-col py-3">
 						<label class="input-group input-group-vertical">
-							<span>Name</span>
+							<span>Length</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="10"
 								required
-								bind:value={n_facility_name}
+								bind:value={n_unit_length}
 								class="input input-bordered"
 							/>
 						</label>
 					</div>
 					<div class="flex flex-col py-3">
 						<label class="input-group input-group-vertical">
-							<span>Email</span>
+							<span>Normal Rate</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="120"
 								required
-								bind:value={n_facility_email}
+								bind:value={n_unit_str_rate}
 								class="input input-bordered"
 							/>
 						</label>
 					</div>
 					<div class="flex flex-col py-3">
 						<label class="input-group input-group-vertical">
-							<span>Phone</span>
+							<span>Special Rate</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="100"
 								required
-								bind:value={n_facility_phone}
+								bind:value={n_unit_spc_rate}
 								class="input input-bordered"
 							/>
 						</label>
 					</div>
 					<div class="flex flex-col py-3">
 						<label class="input-group input-group-vertical">
-							<span>Street</span>
+							<span>Total Rented</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="0"
 								required
-								bind:value={n_facility_street}
+								bind:value={n_unit_rented}
 								class="input input-bordered"
 							/>
 						</label>
 					</div>
 					<div class="flex flex-col py-3">
 						<label class="input-group input-group-vertical">
-							<span>City</span>
+							<span>Total Available</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="50"
 								required
-								bind:value={n_facility_city}
-								class="input input-bordered"
-							/>
-						</label>
-					</div>
-					<div class="flex flex-col py-3">
-						<label class="input-group input-group-vertical">
-							<span>State</span>
-							<input
-								type="text"
-								placeholder="info@site.com"
-								required
-								bind:value={n_facility_state}
-								class="input input-bordered"
-							/>
-						</label>
-					</div>
-					<div class="flex flex-col py-3">
-						<label class="input-group input-group-vertical">
-							<span>Zip</span>
-							<input
-								type="text"
-								placeholder="info@site.com"
-								required
-								bind:value={n_facility_zip}
+								bind:value={n_unit_available}
 								class="input input-bordered"
 							/>
 						</label>
 					</div>
 					<div class="flex flex-col py-3 col-span-2">
 						<label class="input-group input-group-vertical">
-							<span>Hours</span>
+							<span>Climate Controlled</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="1"
 								required
-								bind:value={n_facility_hours}
+								bind:value={n_unit_climate}
 								class="input input-bordered"
-							/>
-						</label>
-					</div>
-					<div class="flex flex-col py-3 col-span-2">
-						<label class="input-group input-group-vertical">
-							<span>About</span>
-							<textarea
-								bind:value={n_facility_about}
-								class="textarea textarea-bordered h-40"
-								placeholder="Have something to tell us?"
 							/>
 						</label>
 					</div>

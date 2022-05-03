@@ -110,11 +110,15 @@ export async function editUnit({ unit, facility_id }) {
 }
 
 // TODO Units Functions
-// export async function createUnit({ facility_id, user, content }) {
-// 	const { data, error } = await supabase.from('units').insert({ content, user });
-// 	return { data, error };
-// }
+export async function createUnit(content) {
+	const { data, error } = await supabase.from('units').insert(content);
+	return { data, error };
+}
 
-// export async function deleteUnit({ content, user }) {}
+export async function deleteUnit(id) {
+	const { data, error } = await supabase.from('units').delete().eq('id', id);
+
+	return { data, error };
+}
 
 // export async function reserveUnit({ content }) {}
