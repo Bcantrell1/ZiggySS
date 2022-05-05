@@ -48,12 +48,11 @@ export async function getFacilitybyUri(facility_uri) {
 	return { data, error };
 }
 
-// TODO Facility Functions
-// export async function editFacility({ content, user }) {}
+export async function deleteFacility(id) {
+	const { data, error } = await supabase.from('facilities').delete().eq('id', id);
 
-// export async function deleteFacility({ content, user }) {}
-
-// export async function getFacilities() {}
+	return { data, error };
+}
 
 //! Units Functions
 export async function getUnits() {
@@ -121,4 +120,4 @@ export async function deleteUnit(id) {
 	return { data, error };
 }
 
-// export async function reserveUnit({ content }) {}
+// export async function reserveUnit(unitId) {}
