@@ -4,13 +4,13 @@
 	// SSR
 	export async function load({ params }) {
 		const { data: facilityData, error: facilityError } = await getFacilitybyUri(params.uri);
-		const { data: unitData, error: unitError } = await getUnitsByFacilityId(facilityData[0]?.id);
+		// const { data: unitData, error: unitError } = await getUnitsByFacilityId(facilityData[0]?.id);
 		return {
 			props: {
 				facilities: facilityData,
-				units: unitData,
-				f_error: facilityError,
-				u_error: unitError
+				// units: unitData,
+				f_error: facilityError
+				// u_error: unitError
 			}
 		};
 	}
@@ -19,17 +19,54 @@
 <script>
 	import CreateUnit from '$lib/components/Admin/CreateUnit.svelte';
 	import { deleteUnit } from '$lib/supabase/services';
-	export let facilities, units, f_error, u_error;
+	import { readable, get } from 'svelte/store';
+	import supabase from '$lib/supabase';
+	import { browser } from '$app/env';
+	import { user } from '$lib/store/auth';
+	import { goto } from '$app/navigation';
 
-	console.log(facilities);
+	export let facilities;
 
-	const updateUnit = async (unit) => {
-		try {
-		} catch (error) {}
-	};
+	const units = readable(null, (set) => {
+		supabase
+			.from('units')
+			.select('*')
+			.eq('facility_id', facilities[0].id)
+			.then(({ error, data }) => set(data));
+
+		const subscription = supabase
+			.from('units')
+			.on('*', (payload) => {
+				console.log('Change received!', payload);
+				// payload.evenType
+				// payload.new
+				// payload.old
+				if (payload.eventType === 'INSERT') {
+					set([...get(units), payload.new]);
+				}
+
+				if (payload.eventType === 'DELETE') {
+					const updatedUnits = [...get(units)];
+					const removeIndex = [...get(units)].map((item) => item.id).indexOf(payload.old.id);
+					removeIndex >= 0 && updatedUnits.splice(removeIndex, 1);
+					set(updatedUnits);
+				}
+			})
+			.subscribe();
+
+		return () => supabase.removeSubscription(subscription);
+	});
+
+	$: if (browser) {
+		if (!$user) {
+			goto('/admin');
+		}
+	}
 </script>
 
-{#if units.length > 0}
+<br />
+<CreateUnit facility_id={facilities[0].id} />
+{#if $units}
 	<table class="table w-full">
 		<!-- head -->
 		<thead>
@@ -38,12 +75,14 @@
 				<th>Type</th>
 				<th>Details</th>
 				<th>Price</th>
+				<th>Rented</th>
+				<th>Available</th>
 				<th />
 			</tr>
 		</thead>
 		<tbody>
 			<!-- row 1 -->
-			{#each units || [] as unit}
+			{#each $units as unit}
 				<tr>
 					<th>
 						<label for="unit-size">
@@ -71,6 +110,16 @@
 							<h2>${unit.str_rate}</h2>
 						</div>
 					</td>
+					<td>
+						<div class="prose">
+							<h2>{unit.rented}</h2>
+						</div>
+					</td>
+					<td>
+						<div class="prose">
+							<h2>{unit.available - unit.rented}</h2>
+						</div>
+					</td>
 					<th>
 						<button on:click={() => deleteUnit(unit.id)} class="btn btn-error btn-lrg"
 							>Delete</button
@@ -80,7 +129,6 @@
 			{/each}
 		</tbody>
 	</table>
-	<CreateUnit facility_id={facilities[0].id} />
 {:else}
-	<CreateUnit facility_id={facilities[0].id} />
+	<progress class="progress progress-primary h-24 w-full" />
 {/if}
