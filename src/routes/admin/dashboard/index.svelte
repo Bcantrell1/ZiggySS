@@ -58,7 +58,7 @@
 					<div class="indicator">
 						<button
 							on:click={() => deleteFacility(facility.id)}
-							class="indicator-item badge badge-error hover:bg-red-900">X</button
+							class="indicator-item badge badge-error hover:bg-red-900">Delete</button
 						>
 					</div>
 					<a

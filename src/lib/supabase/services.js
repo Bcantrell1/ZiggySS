@@ -120,4 +120,10 @@ export async function deleteUnit(id) {
 	return { data, error };
 }
 
-// export async function reserveUnit(unitId) {}
+export async function reserveUnit(unitId, available) {
+	const { data, error } = await supabase
+		.from('units')
+		.update({ available: available - 1 })
+		.match({ id: unitId });
+	return { data, error };
+}
