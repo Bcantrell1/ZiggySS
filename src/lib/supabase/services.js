@@ -12,6 +12,11 @@ export async function createFacility(content) {
 	return { data, error };
 }
 
+export async function updateFacility(facility, id) {
+	const { data, error } = await supabase.from('facilities').update(facility).eq('id', id);
+	return { data, error };
+}
+
 export async function getFacilities() {
 	let { data, error } = await supabase
 		.from('facilities')
