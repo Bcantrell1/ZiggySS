@@ -103,7 +103,7 @@
 							<span>URI</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="city-state-zip"
 								required
 								bind:value={n_facility_uri}
 								class="input input-bordered"
@@ -115,7 +115,7 @@
 							<span>Name</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="Self Storage Company"
 								required
 								bind:value={n_facility_name}
 								class="input input-bordered"
@@ -127,7 +127,7 @@
 							<span>Email</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="example@email.com"
 								required
 								bind:value={n_facility_email}
 								class="input input-bordered"
@@ -139,7 +139,7 @@
 							<span>Phone</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="5555555555"
 								required
 								bind:value={n_facility_phone}
 								class="input input-bordered"
@@ -151,7 +151,7 @@
 							<span>Street</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="5555 W Street Way"
 								required
 								bind:value={n_facility_street}
 								class="input input-bordered"
@@ -163,7 +163,7 @@
 							<span>City</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="City"
 								required
 								bind:value={n_facility_city}
 								class="input input-bordered"
@@ -175,7 +175,7 @@
 							<span>State</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="State"
 								required
 								bind:value={n_facility_state}
 								class="input input-bordered"
@@ -187,7 +187,7 @@
 							<span>Zip</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="12345"
 								required
 								bind:value={n_facility_zip}
 								class="input input-bordered"
@@ -199,7 +199,7 @@
 							<span>Hours</span>
 							<input
 								type="text"
-								placeholder="info@site.com"
+								placeholder="Monday - Saturday: 9am - 5pm"
 								required
 								bind:value={n_facility_hours}
 								class="input input-bordered"
@@ -212,7 +212,7 @@
 							<textarea
 								bind:value={n_facility_about}
 								class="textarea textarea-bordered h-40"
-								placeholder="Have something to tell us?"
+								placeholder="A litle about the facility."
 							/>
 						</label>
 					</div>

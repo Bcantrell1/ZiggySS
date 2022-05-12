@@ -2,9 +2,7 @@
 	import { getUnitsByFacilityId, getFacilitybyUri } from '$lib/supabase/services';
 	export async function load({ params }) {
 		const { data: facilityData, error: facilityError } = await getFacilitybyUri(params.uri);
-		const { data: unitData, error: unitError } = await getUnitsByFacilityId(
-			facilityData[0]?.id
-		);
+		const { data: unitData, error: unitError } = await getUnitsByFacilityId(facilityData[0]?.id);
 		return {
 			props: {
 				facilities: facilityData,
@@ -25,18 +23,13 @@
 
 <Rates_Top {facilities} error={f_error} />
 
-<br />
-<div class="divider" />
-<br />
+<div class="divider py-10" />
 
 <Rates_Table {units} error={u_error} />
 
-<br />
-<div class="divider" />
-<br />
+<div class="divider py-10" />
 
 <section class="">
 	<h2 class="text-center text-xl font-bold">About Us</h2>
-
 	<p>{facilities[0].facility_about}</p>
 </section>

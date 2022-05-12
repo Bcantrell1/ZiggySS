@@ -1,8 +1,10 @@
 import supabase from '.';
+import { goto } from '$app/navigation';
 
 //! Auth Functions
 export async function logOut() {
 	const { error } = await supabase.auth.signOut();
+	goto('/');
 	return { data: !error, error };
 }
 
@@ -125,10 +127,10 @@ export async function deleteUnit(id) {
 	return { data, error };
 }
 
-export async function reserveUnit(unitId, available) {
+export async function reserveUnit(unitId, available, rented) {
 	const { data, error } = await supabase
 		.from('units')
-		.update({ available: available - 1 })
+		.update({ available: available - 1, rented: rented + 1 })
 		.match({ id: unitId });
 	return { data, error };
 }

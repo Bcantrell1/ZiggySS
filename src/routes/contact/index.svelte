@@ -84,6 +84,7 @@
 		<div class="grid grid-cols-2 gap-4">
 			<div class="flex flex-col py-3">
 				<input
+					required
 					type="text"
 					placeholder="First"
 					bind:value={$form.first}
@@ -112,6 +113,7 @@
 			</div>
 			<div class="flex flex-col py-3">
 				<input
+					required
 					type="text"
 					placeholder="Last"
 					bind:value={$form.last}
@@ -168,6 +170,7 @@
 			</div>
 			<div class="flex flex-col py-3">
 				<input
+					required
 					type="text"
 					placeholder="Email"
 					bind:value={$form.email}
@@ -196,6 +199,7 @@
 			</div>
 			<div class="flex flex-col py-3 col-span-2">
 				<textarea
+					required
 					class="textarea textarea-bordered h-40"
 					placeholder="Have something to tell us?"
 					bind:value={$form.message}

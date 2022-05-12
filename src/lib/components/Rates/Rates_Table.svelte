@@ -5,13 +5,21 @@
 
 	let loading = false;
 	let reservedSize = '';
+	let reservationId = '';
 
-	function reserveSelectedUnit(id, available, size) {
+	function uuidv4() {
+		return ([1e7] + -1e3 + -4e3).replace(/[018]/g, (c) =>
+			(c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+		);
+	}
+
+	function reserveSelectedUnit(id, available, rented, size) {
 		try {
 			loading = true;
-			reserveUnit(id, available).then((res) => {
+			reserveUnit(id, available, rented).then((res) => {
 				if (res.data) {
 					reservedSize = size;
+					reservationId = uuidv4();
 					loading = false;
 					document.getElementById('open_modal').click();
 				}
@@ -63,6 +71,8 @@
 										<div class="font-bold">Self Storage</div>
 										{#if unit.climate}
 											<div class="text-sm opacity-50">Climate Controlled</div>
+										{:else}
+											<div class="text-sm opacity-50">Standard</div>
 										{/if}
 									</div>
 								</div>
@@ -81,7 +91,12 @@
 							<th>
 								<button
 									on:click={() =>
-										reserveSelectedUnit(unit.id, unit.available, `${unit.width}X${unit.length}`)}
+										reserveSelectedUnit(
+											unit.id,
+											unit.available,
+											unit.rented,
+											`${unit.width}X${unit.length}`
+										)}
 									class="btn btn-primary btn-lrg">Reserve</button
 								>
 							</th>
@@ -103,6 +118,7 @@
 		<div class="modal-box relative">
 			<label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">x</label>
 			<h3 class="text-lg font-bold">Congratulations! Your unit has been reserved</h3>
+			<h3 class="text-md font-normal">Confirmation ID: {reservationId}</h3>
 			<p class="py-4">
 				Your {reservedSize} unit will be ready for claiming at the facility in person. Bring your drivers
 				license for proof of Identification.
