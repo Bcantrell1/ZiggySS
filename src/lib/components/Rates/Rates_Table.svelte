@@ -1,34 +1,41 @@
 <script>
+	// Components
 	import Error from '$lib/components/Error.svelte';
+	// Services
 	import { reserveUnit } from '$lib/supabase/services';
+	// Props
 	export let units, error;
-
+	// Component variables
 	let loading = false;
 	let reservedSize = '';
 	let reservationId = '';
 
+	// Create UUID for reservation id
 	function uuidv4() {
 		return ([1e7] + -1e3 + -4e3).replace(/[018]/g, (c) =>
 			(c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
 		);
 	}
 
+	// Handle reservation from client
 	function reserveSelectedUnit(id, available, rented, size) {
 		try {
 			loading = true;
 			reserveUnit(id, available, rented).then((res) => {
+				// If Successful
 				if (res.data) {
 					reservedSize = size;
 					reservationId = uuidv4();
 					loading = false;
 					document.getElementById('open_modal').click();
 				}
-
+				// If Error
 				if (res.error) {
 					loading = false;
 					console.log('Error: ', res.error);
 				}
 			});
+			// Server error
 		} catch (error) {
 			loading = false;
 			console.log(error);
@@ -121,7 +128,7 @@
 			<h3 class="text-md font-normal">Confirmation ID: {reservationId}</h3>
 			<p class="py-4">
 				Your {reservedSize} unit will be ready for claiming at the facility in person. Bring your drivers
-				license for proof of Identification.
+				license for proof of Identification, and the above confirmation id.
 			</p>
 		</div>
 	</div>

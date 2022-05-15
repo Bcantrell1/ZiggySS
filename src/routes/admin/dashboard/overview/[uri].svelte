@@ -1,32 +1,35 @@
 <script context="module">
-	import { getUnitsByFacilityId, getFacilitybyUri, editUnit } from '$lib/supabase/services';
-
-	// SSR
+	// Supabase Service imports
+	import { getFacilitybyUri } from '$lib/supabase/services';
+	// Server side rendered variables
 	export async function load({ params }) {
 		const { data: facilityData, error: facilityError } = await getFacilitybyUri(params.uri);
-		// const { data: unitData, error: unitError } = await getUnitsByFacilityId(facilityData[0]?.id);
 		return {
 			props: {
 				facilities: facilityData,
-				// units: unitData,
 				f_error: facilityError
-				// u_error: unitError
 			}
 		};
 	}
 </script>
 
 <script>
+	// Imported components
 	import CreateUnit from '$lib/components/Admin/CreateUnit.svelte';
+	import EditFacility from '$lib/components/Admin/EditFacility.svelte';
+	// Supabase service imports
 	import { deleteUnit, updateFacility } from '$lib/supabase/services';
-	import { readable, get } from 'svelte/store';
 	import supabase from '$lib/supabase';
+	// Framework imports
+	import { readable, get } from 'svelte/store';
 	import { browser } from '$app/env';
-	import { user } from '$lib/store/auth';
 	import { goto } from '$app/navigation';
-
+	// Global user state
+	import { user } from '$lib/store/auth';
+	// Props
 	export let facilities;
 
+	// Realtime function for unit data using readable variable from framework
 	const units = readable(null, (set) => {
 		supabase
 			.from('units')
@@ -57,6 +60,7 @@
 		return () => supabase.removeSubscription(subscription);
 	});
 
+	// Check if user is present
 	$: if (browser) {
 		if (!$user) {
 			goto('/admin');

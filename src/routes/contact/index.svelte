@@ -1,12 +1,15 @@
 <script>
+	// Form libraries
 	import { createForm } from 'svelte-forms-lib';
 	import * as yup from 'yup';
+	// Service import
 	import supabase from '$lib/supabase';
+	// Component variables
 	let apiResult = null;
-
+	// Logic for phone validation
 	const phoneRegExp =
 		/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
+	// Validation for form inputs
 	const validationSchema = yup.object().shape({
 		first: yup.string().required('Please enter a first name'),
 		last: yup.string().required('Please enter a last name'),
@@ -14,7 +17,7 @@
 		email: yup.string().email().required('Please enter a valid email'),
 		message: yup.string().required('Please enter a message')
 	});
-
+	// Form functions and services
 	const { form, errors, handleChange, handleSubmit, isSubmitting, handleReset } = createForm({
 		initialValues: {
 			first: '',
@@ -38,6 +41,7 @@
 			} catch (error) {
 				apiResult = false;
 			}
+			// Reset input values
 			handleReset();
 		}
 	});

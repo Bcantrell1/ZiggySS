@@ -1,3 +1,4 @@
+<!-- Simple Error component -->
 <script>
 	export let error;
 </script>

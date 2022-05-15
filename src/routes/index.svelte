@@ -1,5 +1,7 @@
 <script context="module">
+	// Supabase Service imports
 	import { getFacilities } from '$lib/supabase/services';
+	// Server side rendered variables
 	export async function load({ fetch, session, context }) {
 		const { data, error } = await getFacilities();
 		return {
@@ -12,9 +14,10 @@
 </script>
 
 <script>
+	// Import user
 	import { user } from '$lib/store/auth';
+	// Props
 	export let facilities;
-	$: console.log($user);
 </script>
 
 <section>

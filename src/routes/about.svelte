@@ -1,3 +1,4 @@
+<!-- Simple about component -->
 <section class="place-items-center">
 	<div class="hero my-5">
 		<div class="hero-content text-center">

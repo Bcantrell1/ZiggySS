@@ -1,5 +1,7 @@
 <script context="module">
+	// Supabase Service imports
 	import { getUnitsByFacilityId, getFacilitybyUri } from '$lib/supabase/services';
+	// Server side rendered variables
 	export async function load({ params }) {
 		const { data: facilityData, error: facilityError } = await getFacilitybyUri(params.uri);
 		const { data: unitData, error: unitError } = await getUnitsByFacilityId(facilityData[0]?.id);
@@ -15,10 +17,11 @@
 </script>
 
 <script>
+	// Component Imports
 	import Rates_Top from '$lib/components/Rates/Rates_Top.svelte';
 	import Rates_Table from '$lib/components/Rates/Rates_Table.svelte';
+	// Component Props
 	export let facilities, units, f_error, u_error;
-	// $: console.log(facilities);
 </script>
 
 <Rates_Top {facilities} error={f_error} />

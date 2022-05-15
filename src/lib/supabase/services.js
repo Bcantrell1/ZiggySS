@@ -115,7 +115,6 @@ export async function editUnit({ unit, facility_id }) {
 	return { data, error };
 }
 
-// TODO Units Functions
 export async function createUnit(content) {
 	const { data, error } = await supabase.from('units').insert(content);
 	return { data, error };

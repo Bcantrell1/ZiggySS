@@ -1,6 +1,9 @@
 <script>
+	// Component imports
 	import Error from '$lib/components/Error.svelte';
+	// Props
 	export let facilities, error;
+	// Reactive variable for realtime facility data
 	$: first_facility = facilities[0];
 </script>
 

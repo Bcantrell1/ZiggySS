@@ -1,3 +1,4 @@
+<!-- Simple FAQ Component -->
 <section>
 	<div class="hero my-5">
 		<div class="hero-content text-center">

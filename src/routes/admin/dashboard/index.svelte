@@ -36,7 +36,7 @@
 		return () => supabase.removeSubscription(subscription);
 	});
 
-	// Check for authorized user
+	// Check if user is present
 	$: if (browser) {
 		if (!$user) {
 			goto('/admin');

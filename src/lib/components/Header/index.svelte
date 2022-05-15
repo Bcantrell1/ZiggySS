@@ -1,7 +1,11 @@
 <script>
+	// Framework imports
 	import { page } from '$app/stores';
+	// User state
 	import { user } from '$lib/store/auth';
+	// Supabase service imports
 	import { logOut } from '$lib/supabase/services';
+	// Props
 	export let facilities;
 </script>
 
@@ -122,11 +126,11 @@
 			<li><a class:active={$page.url.pathname === '/faq'} href="/faq">Faq</a></li>
 			<li><a class:active={$page.url.pathname === '/contact'} href="/contact">Contact</a></li>
 			{#if $user}
-			<li>
-				<a class:active={$page.url.pathname.includes('/admin/dashboard')} href="/admin/dashboard"
-					>Admin</a
-				>
-			</li>
+				<li>
+					<a class:active={$page.url.pathname.includes('/admin/dashboard')} href="/admin/dashboard"
+						>Admin</a
+					>
+				</li>
 			{/if}
 		</ul>
 	</div>

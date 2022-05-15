@@ -1,6 +1,6 @@
 <script>
 	import { updateFacility } from '$lib/supabase/services';
-	export let facilities, value;
+	export let facilities, value, facility_id;
 </script>
 
 <div class="flex flex-col py-1 items-center">
@@ -11,7 +11,7 @@
 		on:input={(e) => {
 			value = e.currentTarget.value;
 			try {
-				updateFacility(facilities, facilities[0].id).then((res) => {
+				updateFacility(facilities, facility_id).then((res) => {
 					if (res.data) {
 						console.log(res.data);
 					}

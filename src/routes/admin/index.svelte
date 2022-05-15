@@ -2,10 +2,8 @@
 	// Framework Imports
 	import { goto } from '$app/navigation';
 	import { user } from '$lib/store/auth';
-
-	// DB services
+	// DB/auth services
 	import supabase from '$lib/supabase';
-
 	// 3rd party libs
 	import * as yup from 'yup';
 	import { createForm } from 'svelte-forms-lib';
@@ -13,11 +11,11 @@
 	// Component variables
 	let loginError = false;
 	let loading = false;
-
+	// Form validation schema
 	const validationSchema = yup.object().shape({
 		email: yup.string().email().required('Please enter a valid email')
 	});
-
+	// Form functions and services
 	const { form, errors, handleChange, handleSubmit, isSubmitting, handleReset } = createForm({
 		initialValues: {
 			email: ''
@@ -45,7 +43,7 @@
 		}
 	});
 
-	// Take admin user to dashboard no need for login
+	// Check if user is present
 	if ($user) {
 		goto('/admin/dashboard');
 	}
